@@ -44,18 +44,22 @@ public class BirthdayService {
             var employee = parseEmployee(line);
 
             if (employee.hasBirthday(birthDate)) {
-
-                var recipient = employee.email();
-                var body =
-                    "Happy Birthday, dear %NAME%!".replace(
-                        "%NAME%",
-                        employee.firstName());
-
-                var subject = "Happy Birthday!";
-
-                sendMessage(smtpHost, smtpPort, "sender@here.com", subject, body, recipient);
+                composeEmailAndSend(smtpHost, smtpPort, employee);
             }
         }
+    }
+
+    private void composeEmailAndSend(String smtpHost, int smtpPort, Employee employee)
+        throws MessagingException {
+        var recipient = employee.email();
+        var body =
+            "Happy Birthday, dear %NAME%!".replace(
+                "%NAME%",
+                employee.firstName());
+
+        var subject = "Happy Birthday!";
+
+        sendMessage(smtpHost, smtpPort, "sender@here.com", subject, body, recipient);
     }
 
     private static Employee parseEmployee(String str) throws ParseException {

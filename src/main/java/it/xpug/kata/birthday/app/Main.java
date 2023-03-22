@@ -25,7 +25,7 @@ public class Main {
 
         var service = new BirthdayGreetingsUseCase(
             new CsvEmployeeRepository("employee_data.txt"),
-            new JavaxEmailService()
+            new JavaxEmailService("localhost", 25)
         );
 
         service.sendGreetings(

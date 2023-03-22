@@ -24,7 +24,8 @@ public class AcceptanceTest {
         mailServer = SimpleSmtpServer.start(NONSTANDARD_PORT);
         birthdayGreetingsUseCase =
             new BirthdayGreetingsUseCase(
-                new CsvEmployeeRepository("employee_data.txt"), new JavaxEmailService());
+                new CsvEmployeeRepository("employee_data.txt"),
+                new JavaxEmailService("localhost", NONSTANDARD_PORT));
     }
 
     @AfterEach

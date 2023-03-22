@@ -2,20 +2,16 @@ package it.xpug.kata.birthday.domain;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.Properties;
-import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 
 public class BirthdayGreetingsUseCase {
 
     private final EmployeeRepository repo;
+    private final EmailService emailService;
 
     public BirthdayGreetingsUseCase(EmployeeRepository repo, EmailService emailService) {
         this.repo = repo;
+        this.emailService = emailService;
     }
 
     /**
@@ -48,37 +44,22 @@ public class BirthdayGreetingsUseCase {
         throws MessagingException {
         var emailTemplate = EmailTemplate.fromEmployee(employee);
 
-        sendMessage(smtpHost, smtpPort, emailTemplate);
+        sendMessage(smtpHost, smtpPort, employee, emailTemplate);
     }
 
     /**
      * Sending a message via email.
      *
-     * @param smtpHost  smtp host address
-     * @param smtpPort  smtp host port
+     * @param smtpHost smtp host address
+     * @param smtpPort smtp host port
+     * @param employee employee
      * @param email    email template
      * @throws MessagingException error in sending the email.
      */
     private void sendMessage(
         String smtpHost,
         int smtpPort,
-        EmailTemplate email) throws MessagingException {
-
-        // Create a mail session
-        var props = new Properties();
-        props.put("mail.smtp.host", smtpHost);
-        props.put("mail.smtp.port", "" + smtpPort);
-
-        var session = Session.getInstance(props, null);
-
-        // Construct the message
-        var msg = new MimeMessage(session);
-        msg.setFrom(new InternetAddress(email.sender()));
-        msg.setRecipient(Message.RecipientType.TO, new InternetAddress(email.recipient()));
-        msg.setSubject(email.subject());
-        msg.setText(email.body());
-
-        // Send the message
-        Transport.send(msg);
+        Employee employee, EmailTemplate email) throws MessagingException {
+        emailService.sendEmailTo(employee, email);
     }
 }

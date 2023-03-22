@@ -1,5 +1,6 @@
 package it.xpug.kata.birthday.app;
 
+import static java.time.ZoneOffset.UTC;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.dumbster.smtp.SimpleSmtpServer;
@@ -9,14 +10,16 @@ import it.xpug.kata.birthday.infrastructure.CsvEmployeeRepository;
 import it.xpug.kata.birthday.infrastructure.JavaxEmailService;
 import java.io.FileNotFoundException;
 import java.time.Clock;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-
+@DisplayName("BirthdayGreetingsUseCase")
 public class AcceptanceTest {
 
     private static final int NONSTANDARD_PORT = 9999;
@@ -25,7 +28,7 @@ public class AcceptanceTest {
     private Clock clock;
 
     @BeforeEach
-    public void setUp() throws FileNotFoundException {
+    public void before() throws FileNotFoundException {
         mailServer = SimpleSmtpServer.start(NONSTANDARD_PORT);
 
         birthdayGreetingsUseCase =
@@ -36,57 +39,74 @@ public class AcceptanceTest {
         clock = clockAt(2008, 10, 8);
     }
 
-    private Clock clockAt(int year, int month, int day) {
-        return Clock.fixed(
-            LocalDate.of(year, month, day)
-                .atTime(0, 0)
-                .toInstant(ZoneOffset.UTC),
-            ZoneId.of("CET"));
+    @Nested
+    @DisplayName("when it's somebody's birthday")
+    class Birthday {
+
+        private SmtpMessage message;
+
+        @BeforeEach
+        void before() {
+            birthdayGreetingsUseCase.sendGreetings(clock);
+            message = (SmtpMessage) mailServer.getReceivedEmail().next();
+        }
+
+        @Test
+        public void it_sends_greetings() {
+            assertEquals(1, mailServer.getReceivedEmailSize(), "message not sent?");
+        }
+
+        @Test
+        public void it_has_a_subject() {
+            assertEquals("Happy Birthday!", message.getHeaderValue("Subject"));
+        }
+
+        @Test
+        public void it_has_a_body() {
+            assertEquals("Happy Birthday, dear John!", message.getBody());
+        }
+
+        @Test
+        public void it_has_a_recipient() {
+            var recipients = message.getHeaderValues("To");
+            assertEquals(1, recipients.length);
+            assertEquals("john.doe@foobar.com", recipients[0]);
+        }
+
     }
 
-    @Test
-    public void willSendGreetings_whenItsSomebodysBirthday() {
-        birthdayGreetingsUseCase.sendGreetings(clock);
-        assertEquals(1, mailServer.getReceivedEmailSize(), "message not sent?");
+
+    @Nested
+    @DisplayName("when it's somebody's birthday")
+    class NotBirthday {
+
+        @BeforeEach
+        void before() {
+            birthdayGreetingsUseCase.sendGreetings(clockAt(2008, 1, 1));
+        }
+
+        @Test
+        public void it_does_not_send_email() {
+            assertEquals(0, mailServer.getReceivedEmailSize(), "what? messages?");
+        }
     }
 
-    @Test
-    public void willHaveSubject_whenReceivingAnEmail() {
-        birthdayGreetingsUseCase.sendGreetings(clock);
-        var message = (SmtpMessage) mailServer.getReceivedEmail().next();
-        assertEquals("Happy Birthday!", message.getHeaderValue("Subject"));
-    }
-
-    @Test
-    public void willHaveBody_whenReceivingAnEmail() {
-        birthdayGreetingsUseCase.sendGreetings(clock);
-        var message = (SmtpMessage) mailServer.getReceivedEmail().next();
-
-        assertEquals("Happy Birthday, dear John!", message.getBody());
-    }
-
-    @Test
-    public void willHaveRecipient_whenReceivingAnEmail() {
-        birthdayGreetingsUseCase.sendGreetings(clock);
-        var message = (SmtpMessage) mailServer.getReceivedEmail().next();
-
-        var recipients = message.getHeaderValues("To");
-        assertEquals(1, recipients.length);
-        assertEquals("john.doe@foobar.com", recipients[0]);
-    }
-
-    @Test
-    public void willNotSendEmailsWhenNobodysBirthday() {
-        birthdayGreetingsUseCase.sendGreetings(clockAt(2008, 1, 1));
-
-        assertEquals(0, mailServer.getReceivedEmailSize(), "what? messages?");
-    }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void after() throws Exception {
         mailServer.stop();
 
         Thread.sleep(200);
+    }
+
+    private Clock clockAt(int year, int month, int day) {
+        return Clock.fixed(dateAt(year, month, day), ZoneId.of("CET"));
+    }
+
+    private static Instant dateAt(int year, int month, int day) {
+        return LocalDate.of(year, month, day)
+            .atTime(0, 0)
+            .toInstant(UTC);
     }
 
 }

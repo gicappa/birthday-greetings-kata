@@ -1,5 +1,6 @@
 package it.xpug.kata.birthday.greetings;
 
+import it.xpug.kata.birthday.domain.Employee;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;

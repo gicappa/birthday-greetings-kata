@@ -46,6 +46,9 @@ public class BirthdayGreetingsUseCase {
 
     private void composeEmailAndSend(String smtpHost, int smtpPort, Employee employee)
         throws MessagingException {
+
+        var sender = "sender@here.com";
+
         var recipient = employee.email();
         var body =
             "Happy Birthday, dear %NAME%!".replace(
@@ -54,7 +57,9 @@ public class BirthdayGreetingsUseCase {
 
         var subject = "Happy Birthday!";
 
-        sendMessage(smtpHost, smtpPort, "sender@here.com", subject, body, recipient);
+        var emailTemplate = new EmailTemplate(sender, recipient, subject, body);
+
+        sendMessage(smtpHost, smtpPort, emailTemplate);
     }
 
     /**
@@ -62,19 +67,13 @@ public class BirthdayGreetingsUseCase {
      *
      * @param smtpHost  smtp host address
      * @param smtpPort  smtp host port
-     * @param sender    email sender
-     * @param subject   email subject
-     * @param body      email body
-     * @param recipient email recipient
+     * @param email    email template
      * @throws MessagingException error in sending the email.
      */
     private void sendMessage(
         String smtpHost,
         int smtpPort,
-        String sender,
-        String subject,
-        String body,
-        String recipient) throws MessagingException {
+        EmailTemplate email) throws MessagingException {
 
         // Create a mail session
         var props = new Properties();
@@ -85,10 +84,10 @@ public class BirthdayGreetingsUseCase {
 
         // Construct the message
         var msg = new MimeMessage(session);
-        msg.setFrom(new InternetAddress(sender));
-        msg.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
-        msg.setSubject(subject);
-        msg.setText(body);
+        msg.setFrom(new InternetAddress(email.sender()));
+        msg.setRecipient(Message.RecipientType.TO, new InternetAddress(email.recipient()));
+        msg.setSubject(email.subject());
+        msg.setText(email.body());
 
         // Send the message
         Transport.send(msg);

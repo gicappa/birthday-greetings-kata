@@ -1,7 +1,5 @@
 package it.xpug.kata.birthday.domain;
 
-import java.io.IOException;
-import java.text.ParseException;
 import java.time.Clock;
 import java.time.LocalDate;
 import javax.mail.MessagingException;
@@ -16,6 +14,7 @@ public class BirthdayUseCase {
         EmployeeRepository repo,
         EmailService emailService,
         Clock clock) {
+
         this.repo = repo;
         this.emailService = emailService;
         this.clock = clock;
@@ -40,7 +39,7 @@ public class BirthdayUseCase {
                 var email = EmailTemplate.fromEmployee(employee);
                 emailService.sendEmailTo(employee, email);
             }
-        } catch (IOException | ParseException | MessagingException e) {
+        } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
     }

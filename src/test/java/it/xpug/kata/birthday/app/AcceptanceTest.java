@@ -1,6 +1,6 @@
 package it.xpug.kata.birthday.app;
 
-import static java.time.ZoneOffset.UTC;
+import static it.xpug.kata.birthday.ClockTestHelper.clockAt;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.dumbster.smtp.SimpleSmtpServer;
@@ -9,10 +9,6 @@ import it.xpug.kata.birthday.domain.BirthdayUseCase;
 import it.xpug.kata.birthday.infrastructure.CsvEmployeeRepository;
 import it.xpug.kata.birthday.infrastructure.JavaxEmailService;
 import java.io.FileNotFoundException;
-import java.time.Clock;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -101,16 +97,6 @@ public class AcceptanceTest {
         mailServer.stop();
 
         Thread.sleep(200);
-    }
-
-    private Clock clockAt(int year, int month, int day) {
-        return Clock.fixed(dateAt(year, month, day), ZoneId.of("CET"));
-    }
-
-    private static Instant dateAt(int year, int month, int day) {
-        return LocalDate.of(year, month, day)
-            .atTime(0, 0)
-            .toInstant(UTC);
     }
 
 }

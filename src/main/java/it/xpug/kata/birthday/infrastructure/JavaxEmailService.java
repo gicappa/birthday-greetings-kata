@@ -2,7 +2,6 @@ package it.xpug.kata.birthday.infrastructure;
 
 import it.xpug.kata.birthday.domain.EmailService;
 import it.xpug.kata.birthday.domain.EmailTemplate;
-import it.xpug.kata.birthday.domain.Employee;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -22,7 +21,7 @@ public class JavaxEmailService implements EmailService {
     }
 
     @Override
-    public void sendEmailTo(Employee employee, EmailTemplate email) throws MessagingException {
+    public void sendEmailTo(EmailTemplate email) throws MessagingException {
 
         // Create a mail session
         var props = new Properties();

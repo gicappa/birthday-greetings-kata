@@ -1,7 +1,6 @@
 package it.xpug.kata.birthday.domain;
 
 import static it.xpug.kata.birthday.ClockTestHelper.clockAt;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -11,7 +10,7 @@ import javax.mail.MessagingException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class BirthdayUseCaseTest {
+class BirthdayUseCaseTest {
 
     private BirthdayUseCase birthdayUseCase;
     private EmployeeRepository repo;
@@ -47,6 +46,6 @@ public class BirthdayUseCaseTest {
     void it_sends_an_email_when_it_finds_a_birthday() throws MessagingException {
         birthdayUseCase.sendGreetings();
 
-        verify(emailService).sendEmailTo(emma, any());
+        verify(emailService).sendEmailTo(EmailTemplate.fromEmployee(emma));
     }
 }

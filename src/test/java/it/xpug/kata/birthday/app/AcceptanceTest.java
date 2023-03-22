@@ -46,22 +46,22 @@ public class AcceptanceTest {
         }
 
         @Test
-        public void it_sends_greetings() {
+        void it_sends_greetings() {
             assertEquals(1, mailServer.getReceivedEmailSize(), "message not sent?");
         }
 
         @Test
-        public void it_has_a_subject() {
+        void it_has_a_subject() {
             assertEquals("Happy Birthday!", message.getHeaderValue("Subject"));
         }
 
         @Test
-        public void it_has_a_body() {
+        void it_has_a_body() {
             assertEquals("Happy Birthday, dear John!", message.getBody());
         }
 
         @Test
-        public void it_has_a_recipient() {
+        void it_has_a_recipient() {
             var recipients = message.getHeaderValues("To");
             assertEquals(1, recipients.length);
             assertEquals("john.doe@foobar.com", recipients[0]);

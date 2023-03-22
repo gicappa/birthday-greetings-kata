@@ -21,10 +21,8 @@ public class BirthdayUseCase {
     }
 
     /**
-     * The sendGreetings in the code is executing the whole business logic. <br/> The method seems
-     * to span in several layer of abstraction: - it is opening the file and reading the file lines
-     * - it is parsing the lines and transforming them into employees - it is sending the messages
-     * to send the messages <br/> The amount of responsibility of this class is really huge.
+     * The sendGreetings method filter all the employees who have
+     * their birthday today
      *
      * @throws RuntimeException error while opening a file or parsing the csv
      */
@@ -36,14 +34,16 @@ public class BirthdayUseCase {
                     continue;
                 }
 
-                var email = EmailTemplate.fromEmployee(employee);
-                emailService.sendEmailTo(employee, email);
+                emailService.sendEmailTo(EmailTemplate.fromEmployee(employee));
             }
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
     }
 
+    /**
+     * @return today date
+     */
     private LocalDate today() {
         return LocalDate.now(clock);
     }

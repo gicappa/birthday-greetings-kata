@@ -9,20 +9,20 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 
 
-public class EmployeeTest {
+class EmployeeTest {
 
     @Test
-    public void testBirthday() {
-        Employee employee = new Employee("foo", "bar", "1990/01/31", "a@b.c");
+    void testBirthday() {
+        var employee = new Employee("foo", "bar", "1990/01/31", "a@b.c");
         assertFalse(employee.hasBirthday(LocalDate.of(2008, 1, 30)), "not his birthday");
         assertTrue(employee.hasBirthday(LocalDate.of(2008, 1, 31)), "his birthday");
     }
 
     @Test
-    public void equality() {
-        Employee base = new Employee("First", "Last", "1999/09/01", "first@last.com");
-        Employee same = new Employee("First", "Last", "1999/09/01", "first@last.com");
-        Employee different = new Employee("First", "Last", "1999/09/01", "boom@boom.com");
+    void equality() {
+        var base = new Employee("First", "Last", "1999/09/01", "first@last.com");
+        var same = new Employee("First", "Last", "1999/09/01", "first@last.com");
+        var different = new Employee("First", "Last", "1999/09/01", "boom@boom.com");
 
         assertNotEquals(null, base);
         assertEquals(base, same);

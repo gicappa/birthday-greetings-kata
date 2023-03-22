@@ -8,14 +8,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 
-public class BirthDateTest {
+class BirthDateTest {
 
     @Test
-    public void isSameDate() {
-        BirthDate date = BirthDate.of("1789/01/24");
-        LocalDate sameDay = LocalDate.of(2001, 1, 24);
-        LocalDate notSameDay = LocalDate.of(1789, 1, 25);
-        LocalDate notSameMonth = LocalDate.of(1789, 2, 24);
+    void isSameDate() {
+        var date = BirthDate.of("1789/01/24");
+        var sameDay = LocalDate.of(2001, 1, 24);
+        var notSameDay = LocalDate.of(1789, 1, 25);
+        var notSameMonth = LocalDate.of(1789, 2, 24);
 
         assertTrue(date.isSameDay(sameDay), "same");
         assertFalse(date.isSameDay(notSameDay), "not same day");
@@ -23,10 +23,10 @@ public class BirthDateTest {
     }
 
     @Test
-    public void equality() {
-        BirthDate base = BirthDate.of("2000/01/02");
-        BirthDate same = BirthDate.of("2000/01/02");
-        BirthDate different = BirthDate.of("2000/01/04");
+    void equality() {
+        var base = BirthDate.of("2000/01/02");
+        var same = BirthDate.of("2000/01/02");
+        var different = BirthDate.of("2000/01/04");
 
         assertNotEquals(null, base);
         assertEquals(base, base);

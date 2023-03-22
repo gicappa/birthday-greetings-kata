@@ -17,9 +17,14 @@ public record BirthDate(Date date) {
         this(new Date());
     }
 
-    public BirthDate(String yyyyMMdd) throws ParseException {
-        this(new SimpleDateFormat("yyyy/MM/dd").parse(yyyyMMdd));
+    public static BirthDate of(String date) {
+        try {
+            return new BirthDate(new SimpleDateFormat("yyyy/MM/dd").parse(date));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
+
     public int getDay() {
         return getPartOfDate(DAY_OF_MONTH);
     }

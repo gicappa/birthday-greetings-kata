@@ -6,7 +6,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,24 +18,28 @@ public class CsvEmployeeRepository implements EmployeeRepository {
     }
 
     @Override
-    public List<Employee> findAllEmployees() throws IOException, ParseException {
-        var allEmployees = new ArrayList<Employee>();
+    public List<Employee> findAllEmployees() {
+        try {
+            var allEmployees = new ArrayList<Employee>();
 
-        skipLine();
+            skipLine();
 
-        for (var line = in.readLine(); line != null; line = in.readLine()) {
-            var employee = parseEmployee(line);
-            allEmployees.add(employee);
+            for (var line = in.readLine(); line != null; line = in.readLine()) {
+                var employee = parseEmployee(line);
+                allEmployees.add(employee);
+            }
+
+            return allEmployees;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-
-        return allEmployees;
     }
 
     private void skipLine() throws IOException {
         in.readLine();
     }
 
-    private static Employee parseEmployee(String str) throws ParseException {
+    private static Employee parseEmployee(String str) {
         var employeeData = str.split(", ");
 
         return new Employee(

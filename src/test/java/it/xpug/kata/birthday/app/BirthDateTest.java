@@ -12,18 +12,18 @@ import org.junit.jupiter.api.Test;
 public class BirthDateTest {
 
     @Test
-    public void getters() throws Exception {
-        BirthDate date = new BirthDate("1789/01/24");
+    public void getters() {
+        BirthDate date = BirthDate.of("1789/01/24");
         assertEquals(1, date.getMonth());
         assertEquals(24, date.getDay());
     }
 
     @Test
-    public void isSameDate() throws Exception {
-        BirthDate date = new BirthDate("1789/01/24");
-        BirthDate sameDay = new BirthDate("2001/01/24");
-        BirthDate notSameDay = new BirthDate("1789/01/25");
-        BirthDate notSameMonth = new BirthDate("1789/02/25");
+    public void isSameDate() {
+        BirthDate date = BirthDate.of("1789/01/24");
+        BirthDate sameDay = BirthDate.of("2001/01/24");
+        BirthDate notSameDay = BirthDate.of("1789/01/25");
+        BirthDate notSameMonth = BirthDate.of("1789/02/25");
 
         assertTrue(date.isSameDay(sameDay), "same");
         assertFalse(date.isSameDay(notSameDay), "not same day");
@@ -31,10 +31,10 @@ public class BirthDateTest {
     }
 
     @Test
-    public void equality() throws Exception {
-        BirthDate base = new BirthDate("2000/01/02");
-        BirthDate same = new BirthDate("2000/01/02");
-        BirthDate different = new BirthDate("2000/01/04");
+    public void equality() {
+        BirthDate base = BirthDate.of("2000/01/02");
+        BirthDate same = BirthDate.of("2000/01/02");
+        BirthDate different = BirthDate.of("2000/01/04");
 
         assertNotEquals(null, base);
         assertNotEquals("", base);
@@ -42,5 +42,4 @@ public class BirthDateTest {
         assertEquals(base, same);
         assertNotEquals(base, different);
     }
-
 }

@@ -32,7 +32,7 @@ public class AcceptanceTest {
 
         birthdayService.sendGreetings(
             "employee_data.txt",
-            new XDate("2008/10/08"),
+            new BirthDate("2008/10/08"),
             "localhost",
             NONSTANDARD_PORT);
 
@@ -51,7 +51,7 @@ public class AcceptanceTest {
     public void willNotSendEmailsWhenNobodysBirthday() throws Exception {
         birthdayService.sendGreetings(
             "employee_data.txt",
-            new XDate("2008/01/01"),
+            new BirthDate("2008/01/01"),
             "localhost",
             NONSTANDARD_PORT);
 

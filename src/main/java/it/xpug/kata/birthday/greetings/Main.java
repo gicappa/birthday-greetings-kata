@@ -27,7 +27,7 @@ public class Main {
 
         service.sendGreetings(
             "employee_data.txt",
-            new XDate(),
+            new BirthDate(),
             "localhost",
             25);
     }

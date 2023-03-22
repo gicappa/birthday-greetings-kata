@@ -15,15 +15,15 @@ import java.util.GregorianCalendar;
  * This is a good candidate to be a record and to have birthday
  * as name.
  */
-public class XDate {
+public class BirthDate {
 
     private final Date date;
 
-    public XDate() {
+    public BirthDate() {
         date = new Date();
     }
 
-    public XDate(String yyyyMMdd) throws ParseException {
+    public BirthDate(String yyyyMMdd) throws ParseException {
         date = new SimpleDateFormat("yyyy/MM/dd").parse(yyyyMMdd);
     }
 
@@ -35,7 +35,7 @@ public class XDate {
         return 1 + getPartOfDate(MONTH);
     }
 
-    public boolean isSameDay(XDate anotherDate) {
+    public boolean isSameDay(BirthDate anotherDate) {
         return anotherDate.getDay() == this.getDay() && anotherDate.getMonth() == this.getMonth();
     }
 
@@ -46,7 +46,7 @@ public class XDate {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof XDate other)) {
+        if (!(obj instanceof BirthDate other)) {
             return false;
         }
         return other.date.equals(this.date);

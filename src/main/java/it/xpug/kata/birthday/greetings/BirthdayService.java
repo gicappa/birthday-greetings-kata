@@ -25,14 +25,14 @@ public class BirthdayService {
      * The amount of responsibility of this class is really huge.
      *
      * @param fileName file name to open
-     * @param xDate helper class on dates
+     * @param birthDate helper class on dates
      * @param smtpHost smtp host address
      * @param smtpPort smtp port address
      * @throws IOException error in reading the file
      * @throws ParseException error in parsing a date
      * @throws MessagingException error in sending a message
      */
-    public void sendGreetings(String fileName, XDate xDate, String smtpHost, int smtpPort)
+    public void sendGreetings(String fileName, BirthDate birthDate, String smtpHost, int smtpPort)
         throws IOException, ParseException, MessagingException {
 
         var in = new BufferedReader(new FileReader(fileName));
@@ -47,7 +47,7 @@ public class BirthdayService {
                 employeeData[2],
                 employeeData[3]);
 
-            if (employee.isBirthday(xDate)) {
+            if (employee.isBirthday(birthDate)) {
 
                 var recipient = employee.getEmail();
                 var body =

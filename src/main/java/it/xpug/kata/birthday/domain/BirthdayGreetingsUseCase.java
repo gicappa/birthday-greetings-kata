@@ -25,15 +25,17 @@ public class BirthdayGreetingsUseCase {
      * @throws ParseException     error in parsing a date
      * @throws MessagingException error in sending a message
      */
-    public void sendGreetings(
-        BirthDate birthDate)
+    public void sendGreetings(BirthDate birthDate)
         throws IOException, ParseException, MessagingException {
 
         for (var employee : repo.findAllEmployees()) {
-            if (employee.hasBirthday(birthDate)) {
-                var email = EmailTemplate.fromEmployee(employee);
-                emailService.sendEmailTo(employee, email);
+
+            if (!employee.hasBirthday(birthDate)) {
+                continue;
             }
+
+            var email = EmailTemplate.fromEmployee(employee);
+            emailService.sendEmailTo(employee, email);
         }
     }
 }

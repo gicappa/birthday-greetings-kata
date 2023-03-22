@@ -9,24 +9,17 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
- * A date object that is mostly a wrapper to date to parse
- * and represent a birthday in the domain.
- * <br/>
- * This is a good candidate to be a record and to have birthday
- * as name.
+ * The representation of a birthday in the domain
  */
-public class BirthDate {
-
-    private final Date date;
+public record BirthDate(Date date) {
 
     public BirthDate() {
-        date = new Date();
+        this(new Date());
     }
 
     public BirthDate(String yyyyMMdd) throws ParseException {
-        date = new SimpleDateFormat("yyyy/MM/dd").parse(yyyyMMdd);
+        this(new SimpleDateFormat("yyyy/MM/dd").parse(yyyyMMdd));
     }
-
     public int getDay() {
         return getPartOfDate(DAY_OF_MONTH);
     }
@@ -37,19 +30,6 @@ public class BirthDate {
 
     public boolean isSameDay(BirthDate anotherDate) {
         return anotherDate.getDay() == this.getDay() && anotherDate.getMonth() == this.getMonth();
-    }
-
-    @Override
-    public int hashCode() {
-        return date.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof BirthDate other)) {
-            return false;
-        }
-        return other.date.equals(this.date);
     }
 
     private int getPartOfDate(int part) {

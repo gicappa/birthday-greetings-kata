@@ -38,13 +38,10 @@ public class Employee {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result
-            + ((birthDate == null) ? 0 : birthDate.hashCode());
+        result = prime * result + birthDate.hashCode();
         result = prime * result + ((email == null) ? 0 : email.hashCode());
-        result = prime * result
-            + ((firstName == null) ? 0 : firstName.hashCode());
-        result = prime * result
-            + ((lastName == null) ? 0 : lastName.hashCode());
+        result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+        result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
         return result;
     }
 
@@ -56,15 +53,10 @@ public class Employee {
         if (obj == null) {
             return false;
         }
-        if (!(obj instanceof Employee)) {
+        if (!(obj instanceof Employee other)) {
             return false;
         }
-        Employee other = (Employee) obj;
-        if (birthDate == null) {
-            if (other.birthDate != null) {
-                return false;
-            }
-        } else if (!birthDate.equals(other.birthDate)) {
+        if (!birthDate.equals(other.birthDate)) {
             return false;
         }
         if (email == null) {
@@ -83,8 +75,9 @@ public class Employee {
         }
         if (lastName == null) {
             return other.lastName == null;
-        } else
+        } else {
             return lastName.equals(other.lastName);
+        }
     }
 
 

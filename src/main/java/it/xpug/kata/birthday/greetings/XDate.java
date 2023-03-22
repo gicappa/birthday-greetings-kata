@@ -1,5 +1,8 @@
 package it.xpug.kata.birthday.greetings;
 
+import static java.util.Calendar.DAY_OF_MONTH;
+import static java.util.Calendar.MONTH;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,11 +21,11 @@ public class XDate {
     }
 
     public int getDay() {
-        return getPartOfDate(GregorianCalendar.DAY_OF_MONTH);
+        return getPartOfDate(DAY_OF_MONTH);
     }
 
     public int getMonth() {
-        return 1 + getPartOfDate(GregorianCalendar.MONTH);
+        return 1 + getPartOfDate(MONTH);
     }
 
     public boolean isSameDay(XDate anotherDate) {
@@ -36,15 +39,14 @@ public class XDate {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof XDate)) {
+        if (!(obj instanceof XDate other)) {
             return false;
         }
-        XDate other = (XDate) obj;
         return other.date.equals(this.date);
     }
 
     private int getPartOfDate(int part) {
-        GregorianCalendar calendar = new GregorianCalendar();
+        var calendar = new GregorianCalendar();
         calendar.setTime(date);
         return calendar.get(part);
     }

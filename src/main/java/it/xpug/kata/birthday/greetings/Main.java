@@ -6,10 +6,16 @@ import javax.mail.MessagingException;
 
 public class Main {
 
-    public static void main(String[] args)
+    public static void main(String... args)
         throws IOException, ParseException, MessagingException {
-        BirthdayService service = new BirthdayService();
-        service.sendGreetings("employee_data.txt", new XDate(), "localhost", 25);
+
+        var service = new BirthdayService();
+
+        service.sendGreetings(
+            "employee_data.txt",
+            new XDate(),
+            "localhost",
+            25);
     }
 
 }

@@ -39,15 +39,9 @@ public class BirthdayService {
 
         var in = new BufferedReader(new FileReader(fileName));
 
-        String str = in.readLine();
-        while ((str = in.readLine()) != null) {
-            var employeeData = str.split(", ");
-
-            var employee = new Employee(
-                employeeData[1],
-                employeeData[0],
-                employeeData[2],
-                employeeData[3]);
+        String line = in.readLine();
+        while ((line = in.readLine()) != null) {
+            var employee = parseEmployee(line);
 
             if (employee.hasBirthday(birthDate)) {
 
@@ -62,6 +56,16 @@ public class BirthdayService {
                 sendMessage(smtpHost, smtpPort, "sender@here.com", subject, body, recipient);
             }
         }
+    }
+
+    private static Employee parseEmployee(String str) throws ParseException {
+        var employeeData = str.split(", ");
+
+        return new Employee(
+            employeeData[1],
+            employeeData[0],
+            employeeData[2],
+            employeeData[3]);
     }
 
     /**

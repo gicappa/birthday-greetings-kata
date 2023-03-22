@@ -21,21 +21,21 @@ public class BirthdayGreetingsUseCase {
      * to send the messages <br/> The amount of responsibility of this class is really huge.
      *
      * @param birthDate helper class on dates
-     * @throws IOException        error in reading the file
-     * @throws ParseException     error in parsing a date
-     * @throws MessagingException error in sending a message
+     * @throws RuntimeException error while opening a file or parsing the csv
      */
-    public void sendGreetings(BirthDate birthDate)
-        throws IOException, ParseException, MessagingException {
+    public void sendGreetings(BirthDate birthDate) {
+        try {
+            for (var employee : repo.findAllEmployees()) {
 
-        for (var employee : repo.findAllEmployees()) {
+                if (!employee.hasBirthday(birthDate)) {
+                    continue;
+                }
 
-            if (!employee.hasBirthday(birthDate)) {
-                continue;
+                var email = EmailTemplate.fromEmployee(employee);
+                emailService.sendEmailTo(employee, email);
             }
-
-            var email = EmailTemplate.fromEmployee(employee);
-            emailService.sendEmailTo(employee, email);
+        } catch (IOException | ParseException | MessagingException e) {
+            throw new RuntimeException(e);
         }
     }
 }

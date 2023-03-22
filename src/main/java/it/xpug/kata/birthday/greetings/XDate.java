@@ -8,6 +8,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+/**
+ * A date object that is mostly a wrapper to date to parse
+ * and represent a birthday in the domain.
+ * <br/>
+ * This is a good candidate to be a record and to have birthday
+ * as name.
+ */
 public class XDate {
 
     private final Date date;

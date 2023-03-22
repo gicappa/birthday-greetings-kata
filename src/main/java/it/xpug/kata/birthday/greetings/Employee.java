@@ -2,6 +2,11 @@ package it.xpug.kata.birthday.greetings;
 
 import java.text.ParseException;
 
+/**
+ * The employee representation
+ * This is a value object that holds the employee information
+ * It could be refactored as a Record
+ */
 public class Employee {
 
     private final XDate birthDate;

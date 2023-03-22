@@ -47,13 +47,13 @@ public class BirthdayService {
                 employeeData[2],
                 employeeData[3]);
 
-            if (employee.isBirthday(birthDate)) {
+            if (employee.hasBirthday(birthDate)) {
 
-                var recipient = employee.getEmail();
+                var recipient = employee.email();
                 var body =
                     "Happy Birthday, dear %NAME%!".replace(
                         "%NAME%",
-                        employee.getFirstName());
+                        employee.firstName());
 
                 var subject = "Happy Birthday!";
 

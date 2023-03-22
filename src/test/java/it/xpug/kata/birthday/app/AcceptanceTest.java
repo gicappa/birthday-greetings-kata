@@ -38,9 +38,7 @@ public class AcceptanceTest {
     public void willSendGreetings_whenItsSomebodysBirthday() throws Exception {
 
         birthdayGreetingsUseCase.sendGreetings(
-            new BirthDate("2008/10/08"),
-            "localhost",
-            NONSTANDARD_PORT);
+            new BirthDate("2008/10/08"));
 
         assertEquals(1, mailServer.getReceivedEmailSize(), "message not sent?");
 
@@ -56,9 +54,7 @@ public class AcceptanceTest {
     @Test
     public void willNotSendEmailsWhenNobodysBirthday() throws Exception {
         birthdayGreetingsUseCase.sendGreetings(
-            new BirthDate("2008/01/01"),
-            "localhost",
-            NONSTANDARD_PORT);
+            new BirthDate("2008/01/01"));
 
         assertEquals(0, mailServer.getReceivedEmailSize(), "what? messages?");
     }

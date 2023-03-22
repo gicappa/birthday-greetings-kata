@@ -29,9 +29,7 @@ public class Main {
         );
 
         service.sendGreetings(
-            new BirthDate(),
-            "localhost",
-            25);
+            new BirthDate());
     }
 
 }

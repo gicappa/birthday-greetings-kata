@@ -1,4 +1,4 @@
-package it.xpug.kata.birthday.greetings;
+package it.xpug.kata.birthday.domain;
 
 import static java.util.Calendar.DAY_OF_MONTH;
 import static java.util.Calendar.MONTH;

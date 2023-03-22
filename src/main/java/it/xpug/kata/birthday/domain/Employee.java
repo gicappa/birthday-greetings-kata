@@ -1,6 +1,5 @@
 package it.xpug.kata.birthday.domain;
 
-import it.xpug.kata.birthday.greetings.BirthDate;
 import java.text.ParseException;
 
 /**

@@ -1,5 +1,6 @@
 package it.xpug.kata.birthday.greetings;
 
+import it.xpug.kata.birthday.domain.BirthDate;
 import java.io.IOException;
 import java.text.ParseException;
 import javax.mail.MessagingException;

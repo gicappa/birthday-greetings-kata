@@ -1,12 +1,8 @@
-package it.xpug.kata.birthday.greetings;
+package it.xpug.kata.birthday.domain;
 
-import it.xpug.kata.birthday.domain.BirthDate;
-import it.xpug.kata.birthday.domain.Employee;
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -15,7 +11,13 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-public class BirthdayService {
+public class BirthdayGreetingsUseCase {
+
+    private final EmployeeRepository repo;
+
+    public BirthdayGreetingsUseCase(EmployeeRepository repo) {
+        this.repo = repo;
+    }
 
     /**
      * The sendGreetings in the code is executing the whole business logic. <br/> The method seems
@@ -41,18 +43,10 @@ public class BirthdayService {
         }
     }
 
-    private static ArrayList<Employee> findAllEmployees(String fileName)
+    private List<Employee> findAllEmployees(String fileName)
         throws IOException, ParseException {
-        var allEmployees = new ArrayList<Employee>();
 
-        var in = new BufferedReader(new FileReader(fileName));
-
-        String line = in.readLine();
-        while ((line = in.readLine()) != null) {
-            var employee = parseEmployee(line);
-            allEmployees.add(employee);
-        }
-        return allEmployees;
+        return repo.findAllEmployees();
     }
 
     private void composeEmailAndSend(String smtpHost, int smtpPort, Employee employee)
@@ -66,16 +60,6 @@ public class BirthdayService {
         var subject = "Happy Birthday!";
 
         sendMessage(smtpHost, smtpPort, "sender@here.com", subject, body, recipient);
-    }
-
-    private static Employee parseEmployee(String str) throws ParseException {
-        var employeeData = str.split(", ");
-
-        return new Employee(
-            employeeData[1],
-            employeeData[0],
-            employeeData[2],
-            employeeData[3]);
     }
 
     /**

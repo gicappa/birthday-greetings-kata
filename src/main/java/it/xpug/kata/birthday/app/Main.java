@@ -1,6 +1,8 @@
-package it.xpug.kata.birthday.greetings;
+package it.xpug.kata.birthday.app;
 
 import it.xpug.kata.birthday.domain.BirthDate;
+import it.xpug.kata.birthday.domain.BirthdayGreetingsUseCase;
+import it.xpug.kata.birthday.infrastructure.CsvEmployeeRepository;
 import java.io.IOException;
 import java.text.ParseException;
 import javax.mail.MessagingException;
@@ -24,7 +26,8 @@ public class Main {
     public static void main(String... args)
         throws IOException, ParseException, MessagingException {
 
-        var service = new BirthdayService();
+        var service = new BirthdayGreetingsUseCase(
+            new CsvEmployeeRepository("employee_data.txt"));
 
         service.sendGreetings(
             "employee_data.txt",

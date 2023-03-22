@@ -30,7 +30,6 @@ public class Main {
             new CsvEmployeeRepository("employee_data.txt"));
 
         service.sendGreetings(
-            "employee_data.txt",
             new BirthDate(),
             "localhost",
             25);

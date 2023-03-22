@@ -36,7 +36,6 @@ public class AcceptanceTest {
     public void willSendGreetings_whenItsSomebodysBirthday() throws Exception {
 
         birthdayGreetingsUseCase.sendGreetings(
-            "employee_data.txt",
             new BirthDate("2008/10/08"),
             "localhost",
             NONSTANDARD_PORT);
@@ -55,7 +54,6 @@ public class AcceptanceTest {
     @Test
     public void willNotSendEmailsWhenNobodysBirthday() throws Exception {
         birthdayGreetingsUseCase.sendGreetings(
-            "employee_data.txt",
             new BirthDate("2008/01/01"),
             "localhost",
             NONSTANDARD_PORT);

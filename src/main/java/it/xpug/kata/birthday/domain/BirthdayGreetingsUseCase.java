@@ -2,7 +2,6 @@ package it.xpug.kata.birthday.domain;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.List;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -25,7 +24,6 @@ public class BirthdayGreetingsUseCase {
      * - it is parsing the lines and transforming them into employees - it is sending the messages
      * to send the messages <br/> The amount of responsibility of this class is really huge.
      *
-     * @param fileName  file name to open
      * @param birthDate helper class on dates
      * @param smtpHost  smtp host address
      * @param smtpPort  smtp port address
@@ -33,20 +31,17 @@ public class BirthdayGreetingsUseCase {
      * @throws ParseException     error in parsing a date
      * @throws MessagingException error in sending a message
      */
-    public void sendGreetings(String fileName, BirthDate birthDate, String smtpHost, int smtpPort)
+    public void sendGreetings(
+        BirthDate birthDate,
+        String smtpHost,
+        int smtpPort)
         throws IOException, ParseException, MessagingException {
 
-        for (var employee : findAllEmployees(fileName)) {
+        for (var employee : repo.findAllEmployees()) {
             if (employee.hasBirthday(birthDate)) {
                 composeEmailAndSend(smtpHost, smtpPort, employee);
             }
         }
-    }
-
-    private List<Employee> findAllEmployees(String fileName)
-        throws IOException, ParseException {
-
-        return repo.findAllEmployees();
     }
 
     private void composeEmailAndSend(String smtpHost, int smtpPort, Employee employee)

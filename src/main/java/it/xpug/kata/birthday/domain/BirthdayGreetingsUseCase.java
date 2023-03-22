@@ -10,12 +10,15 @@ public class BirthdayGreetingsUseCase {
 
     private final EmployeeRepository repo;
     private final EmailService emailService;
+    private final Clock clock;
 
     public BirthdayGreetingsUseCase(
         EmployeeRepository repo,
-        EmailService emailService) {
+        EmailService emailService,
+        Clock clock) {
         this.repo = repo;
         this.emailService = emailService;
+        this.clock = clock;
     }
 
     /**
@@ -24,14 +27,13 @@ public class BirthdayGreetingsUseCase {
      * - it is parsing the lines and transforming them into employees - it is sending the messages
      * to send the messages <br/> The amount of responsibility of this class is really huge.
      *
-     * @param clock the clock of the current timezone
      * @throws RuntimeException error while opening a file or parsing the csv
      */
-    public void sendGreetings(Clock clock) {
+    public void sendGreetings() {
         try {
             for (var employee : repo.findAllEmployees()) {
 
-                if (!employee.hasBirthday(today(clock))) {
+                if (!employee.hasBirthday(today())) {
                     continue;
                 }
 
@@ -43,7 +45,7 @@ public class BirthdayGreetingsUseCase {
         }
     }
 
-    private static LocalDate today(Clock clock) {
+    private LocalDate today() {
         return LocalDate.now(clock);
     }
 }

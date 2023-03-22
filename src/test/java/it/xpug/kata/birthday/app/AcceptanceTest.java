@@ -25,18 +25,10 @@ public class AcceptanceTest {
     private static final int NONSTANDARD_PORT = 9999;
     private BirthdayGreetingsUseCase birthdayGreetingsUseCase;
     private SimpleSmtpServer mailServer;
-    private Clock clock;
 
     @BeforeEach
-    public void before() throws FileNotFoundException {
+    public void before() {
         mailServer = SimpleSmtpServer.start(NONSTANDARD_PORT);
-
-        birthdayGreetingsUseCase =
-            new BirthdayGreetingsUseCase(
-                new CsvEmployeeRepository("employee_data.txt"),
-                new JavaxEmailService("localhost", NONSTANDARD_PORT));
-
-        clock = clockAt(2008, 10, 8);
     }
 
     @Nested
@@ -46,8 +38,14 @@ public class AcceptanceTest {
         private SmtpMessage message;
 
         @BeforeEach
-        void before() {
-            birthdayGreetingsUseCase.sendGreetings(clock);
+        void before() throws FileNotFoundException {
+            birthdayGreetingsUseCase =
+                new BirthdayGreetingsUseCase(
+                    new CsvEmployeeRepository("employee_data.txt"),
+                    new JavaxEmailService("localhost", NONSTANDARD_PORT),
+                    clockAt(2008, 10, 8));
+
+            birthdayGreetingsUseCase.sendGreetings();
             message = (SmtpMessage) mailServer.getReceivedEmail().next();
         }
 
@@ -81,8 +79,14 @@ public class AcceptanceTest {
     class NotBirthday {
 
         @BeforeEach
-        void before() {
-            birthdayGreetingsUseCase.sendGreetings(clockAt(2008, 1, 1));
+        void before() throws FileNotFoundException {
+            birthdayGreetingsUseCase =
+                new BirthdayGreetingsUseCase(
+                    new CsvEmployeeRepository("employee_data.txt"),
+                    new JavaxEmailService("localhost", NONSTANDARD_PORT),
+                    clockAt(2008, 1, 1));
+
+            birthdayGreetingsUseCase.sendGreetings();
         }
 
         @Test

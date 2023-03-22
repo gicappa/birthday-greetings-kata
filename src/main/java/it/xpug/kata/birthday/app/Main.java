@@ -20,10 +20,10 @@ public class Main {
 
         var birthdayGreetingsUseCase = new BirthdayGreetingsUseCase(
             new CsvEmployeeRepository("employee_data.txt"),
-            new JavaxEmailService("localhost", 25)
-        );
+            new JavaxEmailService("localhost", 25),
+            Clock.systemDefaultZone());
 
-        birthdayGreetingsUseCase.sendGreetings(Clock.systemDefaultZone());
+        birthdayGreetingsUseCase.sendGreetings();
     }
 
 }

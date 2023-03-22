@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -17,32 +18,33 @@ import javax.mail.internet.MimeMessage;
 public class BirthdayService {
 
     /**
-     * The sendGreetings in the code is executing the whole business logic.
-     * <br/>
-     * The method seems to span in several layer of abstraction:
-     * - it is opening the file and reading the file lines
-     * - it is parsing the lines and transforming them into employees
-     * - it is sending the messages to send the messages
-     * <br/>
-     * The amount of responsibility of this class is really huge.
+     * The sendGreetings in the code is executing the whole business logic. <br/> The method seems
+     * to span in several layer of abstraction: - it is opening the file and reading the file lines
+     * - it is parsing the lines and transforming them into employees - it is sending the messages
+     * to send the messages <br/> The amount of responsibility of this class is really huge.
      *
-     * @param fileName file name to open
+     * @param fileName  file name to open
      * @param birthDate helper class on dates
-     * @param smtpHost smtp host address
-     * @param smtpPort smtp port address
-     * @throws IOException error in reading the file
-     * @throws ParseException error in parsing a date
+     * @param smtpHost  smtp host address
+     * @param smtpPort  smtp port address
+     * @throws IOException        error in reading the file
+     * @throws ParseException     error in parsing a date
      * @throws MessagingException error in sending a message
      */
     public void sendGreetings(String fileName, BirthDate birthDate, String smtpHost, int smtpPort)
         throws IOException, ParseException, MessagingException {
+
+        var allEmployees = new ArrayList<Employee>();
 
         var in = new BufferedReader(new FileReader(fileName));
 
         String line = in.readLine();
         while ((line = in.readLine()) != null) {
             var employee = parseEmployee(line);
+            allEmployees.add(employee);
+        }
 
+        for (var employee : allEmployees) {
             if (employee.hasBirthday(birthDate)) {
                 composeEmailAndSend(smtpHost, smtpPort, employee);
             }
@@ -75,11 +77,11 @@ public class BirthdayService {
     /**
      * Sending a message via email.
      *
-     * @param smtpHost smtp host address
-     * @param smtpPort smtp host port
-     * @param sender email sender
-     * @param subject email subject
-     * @param body email body
+     * @param smtpHost  smtp host address
+     * @param smtpPort  smtp host port
+     * @param sender    email sender
+     * @param subject   email subject
+     * @param body      email body
      * @param recipient email recipient
      * @throws MessagingException error in sending the email.
      */

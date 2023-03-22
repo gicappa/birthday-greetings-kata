@@ -1,5 +1,7 @@
 package it.xpug.kata.birthday.domain;
 
+import java.time.LocalDate;
+
 /**
  * The employee representation This is a value object that holds the employee information It could
  * be refactored as a Record
@@ -10,8 +12,7 @@ public record Employee(String firstName, String lastName, BirthDate birthDate, S
         this(firstName, lastName, BirthDate.of(birthDate), email);
     }
 
-    public boolean hasBirthday(BirthDate today) {
-        return today.isSameDay(birthDate);
+    public boolean hasBirthday(LocalDate date) {
+        return birthDate.isSameDay(date);
     }
-
 }

@@ -2,6 +2,8 @@ package it.xpug.kata.birthday.domain;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.time.Clock;
+import java.time.LocalDate;
 import javax.mail.MessagingException;
 
 public class BirthdayGreetingsUseCase {
@@ -9,7 +11,9 @@ public class BirthdayGreetingsUseCase {
     private final EmployeeRepository repo;
     private final EmailService emailService;
 
-    public BirthdayGreetingsUseCase(EmployeeRepository repo, EmailService emailService) {
+    public BirthdayGreetingsUseCase(
+        EmployeeRepository repo,
+        EmailService emailService) {
         this.repo = repo;
         this.emailService = emailService;
     }
@@ -20,14 +24,14 @@ public class BirthdayGreetingsUseCase {
      * - it is parsing the lines and transforming them into employees - it is sending the messages
      * to send the messages <br/> The amount of responsibility of this class is really huge.
      *
-     * @param birthDate helper class on dates
+     * @param clock the clock of the current timezone
      * @throws RuntimeException error while opening a file or parsing the csv
      */
-    public void sendGreetings(BirthDate birthDate) {
+    public void sendGreetings(Clock clock) {
         try {
             for (var employee : repo.findAllEmployees()) {
 
-                if (!employee.hasBirthday(birthDate)) {
+                if (!employee.hasBirthday(today(clock))) {
                     continue;
                 }
 
@@ -37,5 +41,9 @@ public class BirthdayGreetingsUseCase {
         } catch (IOException | ParseException | MessagingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static LocalDate today(Clock clock) {
+        return LocalDate.now(clock);
     }
 }

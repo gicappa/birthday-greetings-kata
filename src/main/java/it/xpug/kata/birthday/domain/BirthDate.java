@@ -8,25 +8,13 @@ import java.time.format.DateTimeFormatter;
  */
 public record BirthDate(LocalDate date) {
 
-    public BirthDate() {
-        this(LocalDate.now());
-    }
-
     public static BirthDate of(String date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        return new BirthDate(LocalDate.parse(date, formatter));
+        return new BirthDate(LocalDate.parse(
+            date, DateTimeFormatter.ofPattern("yyyy/MM/dd")));
     }
 
-    public int getDay() {
-        return date.getDayOfMonth();
+    public boolean isSameDay(LocalDate today) {
+        return date.getDayOfMonth() == today.getDayOfMonth() &&
+            date.getMonthValue() == today.getMonthValue();
     }
-
-    public int getMonth() {
-        return date.getMonthValue();
-    }
-
-    public boolean isSameDay(BirthDate anotherDate) {
-        return anotherDate.getDay() == this.getDay() && anotherDate.getMonth() == this.getMonth();
-    }
-
 }

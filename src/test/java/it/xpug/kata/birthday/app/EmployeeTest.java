@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import it.xpug.kata.birthday.domain.BirthDate;
 import it.xpug.kata.birthday.domain.Employee;
+import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 
 
@@ -15,8 +15,8 @@ public class EmployeeTest {
     @Test
     public void testBirthday() {
         Employee employee = new Employee("foo", "bar", "1990/01/31", "a@b.c");
-        assertFalse(employee.hasBirthday(BirthDate.of("2008/01/30")), "not his birthday");
-        assertTrue(employee.hasBirthday(BirthDate.of("2008/01/31")), "his birthday");
+        assertFalse(employee.hasBirthday(LocalDate.of(2008, 1, 30)), "not his birthday");
+        assertTrue(employee.hasBirthday(LocalDate.of(2008, 1, 31)), "his birthday");
     }
 
     @Test

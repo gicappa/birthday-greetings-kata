@@ -46,18 +46,7 @@ public class BirthdayGreetingsUseCase {
 
     private void composeEmailAndSend(String smtpHost, int smtpPort, Employee employee)
         throws MessagingException {
-
-        var sender = "sender@here.com";
-
-        var recipient = employee.email();
-        var body =
-            "Happy Birthday, dear %NAME%!".replace(
-                "%NAME%",
-                employee.firstName());
-
-        var subject = "Happy Birthday!";
-
-        var emailTemplate = new EmailTemplate(sender, recipient, subject, body);
+        var emailTemplate = EmailTemplate.fromEmployee(employee);
 
         sendMessage(smtpHost, smtpPort, emailTemplate);
     }

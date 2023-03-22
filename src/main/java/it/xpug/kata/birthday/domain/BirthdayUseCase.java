@@ -6,13 +6,13 @@ import java.time.Clock;
 import java.time.LocalDate;
 import javax.mail.MessagingException;
 
-public class BirthdayGreetingsUseCase {
+public class BirthdayUseCase {
 
     private final EmployeeRepository repo;
     private final EmailService emailService;
     private final Clock clock;
 
-    public BirthdayGreetingsUseCase(
+    public BirthdayUseCase(
         EmployeeRepository repo,
         EmailService emailService,
         Clock clock) {

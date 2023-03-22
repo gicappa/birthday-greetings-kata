@@ -1,6 +1,6 @@
 package it.xpug.kata.birthday.app;
 
-import it.xpug.kata.birthday.domain.BirthdayGreetingsUseCase;
+import it.xpug.kata.birthday.domain.BirthdayUseCase;
 import it.xpug.kata.birthday.infrastructure.CsvEmployeeRepository;
 import it.xpug.kata.birthday.infrastructure.JavaxEmailService;
 import java.io.IOException;
@@ -18,7 +18,7 @@ public class Main {
      */
     public static void main(String... args) throws IOException {
 
-        var birthdayGreetingsUseCase = new BirthdayGreetingsUseCase(
+        var birthdayGreetingsUseCase = new BirthdayUseCase(
             new CsvEmployeeRepository("employee_data.txt"),
             new JavaxEmailService("localhost", 25),
             Clock.systemDefaultZone());

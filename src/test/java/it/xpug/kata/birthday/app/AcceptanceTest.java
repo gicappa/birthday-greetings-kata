@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.dumbster.smtp.SimpleSmtpServer;
 import com.dumbster.smtp.SmtpMessage;
-import it.xpug.kata.birthday.domain.BirthdayGreetingsUseCase;
+import it.xpug.kata.birthday.domain.BirthdayUseCase;
 import it.xpug.kata.birthday.infrastructure.CsvEmployeeRepository;
 import it.xpug.kata.birthday.infrastructure.JavaxEmailService;
 import java.io.FileNotFoundException;
@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
 public class AcceptanceTest {
 
     private static final int NONSTANDARD_PORT = 9999;
-    private BirthdayGreetingsUseCase birthdayGreetingsUseCase;
+    private BirthdayUseCase birthdayUseCase;
     private SimpleSmtpServer mailServer;
 
     @BeforeEach
@@ -39,13 +39,13 @@ public class AcceptanceTest {
 
         @BeforeEach
         void before() throws FileNotFoundException {
-            birthdayGreetingsUseCase =
-                new BirthdayGreetingsUseCase(
+            birthdayUseCase =
+                new BirthdayUseCase(
                     new CsvEmployeeRepository("employee_data.txt"),
                     new JavaxEmailService("localhost", NONSTANDARD_PORT),
                     clockAt(2008, 10, 8));
 
-            birthdayGreetingsUseCase.sendGreetings();
+            birthdayUseCase.sendGreetings();
             message = (SmtpMessage) mailServer.getReceivedEmail().next();
         }
 
@@ -80,13 +80,13 @@ public class AcceptanceTest {
 
         @BeforeEach
         void before() throws FileNotFoundException {
-            birthdayGreetingsUseCase =
-                new BirthdayGreetingsUseCase(
+            birthdayUseCase =
+                new BirthdayUseCase(
                     new CsvEmployeeRepository("employee_data.txt"),
                     new JavaxEmailService("localhost", NONSTANDARD_PORT),
                     clockAt(2008, 1, 1));
 
-            birthdayGreetingsUseCase.sendGreetings();
+            birthdayUseCase.sendGreetings();
         }
 
         @Test

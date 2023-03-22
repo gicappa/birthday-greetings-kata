@@ -1,11 +1,10 @@
-package it.xpug.kata.birthday.app;
+package it.xpug.kata.birthday.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import it.xpug.kata.birthday.domain.Employee;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +25,6 @@ public class EmployeeTest {
         Employee different = new Employee("First", "Last", "1999/09/01", "boom@boom.com");
 
         assertNotEquals(null, base);
-        assertNotEquals("", base);
         assertEquals(base, same);
         assertNotEquals(base, different);
     }

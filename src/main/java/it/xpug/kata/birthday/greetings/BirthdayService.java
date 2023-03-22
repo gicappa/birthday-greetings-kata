@@ -34,6 +34,15 @@ public class BirthdayService {
     public void sendGreetings(String fileName, BirthDate birthDate, String smtpHost, int smtpPort)
         throws IOException, ParseException, MessagingException {
 
+        for (var employee : findAllEmployees(fileName)) {
+            if (employee.hasBirthday(birthDate)) {
+                composeEmailAndSend(smtpHost, smtpPort, employee);
+            }
+        }
+    }
+
+    private static ArrayList<Employee> findAllEmployees(String fileName)
+        throws IOException, ParseException {
         var allEmployees = new ArrayList<Employee>();
 
         var in = new BufferedReader(new FileReader(fileName));
@@ -43,12 +52,7 @@ public class BirthdayService {
             var employee = parseEmployee(line);
             allEmployees.add(employee);
         }
-
-        for (var employee : allEmployees) {
-            if (employee.hasBirthday(birthDate)) {
-                composeEmailAndSend(smtpHost, smtpPort, employee);
-            }
-        }
+        return allEmployees;
     }
 
     private void composeEmailAndSend(String smtpHost, int smtpPort, Employee employee)

@@ -6,6 +6,7 @@ import com.dumbster.smtp.SimpleSmtpServer;
 import com.dumbster.smtp.SmtpMessage;
 import it.xpug.kata.birthday.domain.BirthDate;
 import it.xpug.kata.birthday.domain.BirthdayGreetingsUseCase;
+import it.xpug.kata.birthday.domain.EmailService;
 import it.xpug.kata.birthday.infrastructure.CsvEmployeeRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +24,8 @@ public class AcceptanceTest {
         mailServer = SimpleSmtpServer.start(NONSTANDARD_PORT);
         birthdayGreetingsUseCase =
             new BirthdayGreetingsUseCase(
-                new CsvEmployeeRepository("employee_data.txt"));
+                new CsvEmployeeRepository("employee_data.txt"), new EmailService() {
+            });
     }
 
     @AfterEach

@@ -14,7 +14,7 @@ public class BirthdayGreetingsUseCase {
 
     private final EmployeeRepository repo;
 
-    public BirthdayGreetingsUseCase(EmployeeRepository repo) {
+    public BirthdayGreetingsUseCase(EmployeeRepository repo, EmailService emailService) {
         this.repo = repo;
     }
 

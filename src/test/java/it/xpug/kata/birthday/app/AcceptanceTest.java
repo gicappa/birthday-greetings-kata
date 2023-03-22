@@ -8,6 +8,7 @@ import it.xpug.kata.birthday.domain.BirthDate;
 import it.xpug.kata.birthday.domain.BirthdayGreetingsUseCase;
 import it.xpug.kata.birthday.infrastructure.CsvEmployeeRepository;
 import it.xpug.kata.birthday.infrastructure.JavaxEmailService;
+import java.io.FileNotFoundException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,7 @@ public class AcceptanceTest {
     private SimpleSmtpServer mailServer;
 
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws FileNotFoundException {
         mailServer = SimpleSmtpServer.start(NONSTANDARD_PORT);
         birthdayGreetingsUseCase =
             new BirthdayGreetingsUseCase(

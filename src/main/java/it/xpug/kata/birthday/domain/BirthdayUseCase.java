@@ -3,6 +3,9 @@ package it.xpug.kata.birthday.domain;
 import java.time.Clock;
 import java.time.LocalDate;
 
+/**
+ * UseCase classes are the entry point into the domain
+ */
 public class BirthdayUseCase {
 
     private final EmployeeRepo repo;

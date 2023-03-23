@@ -17,9 +17,9 @@ class BirthDateTest {
         var notSameDay = LocalDate.of(1789, 1, 25);
         var notSameMonth = LocalDate.of(1789, 2, 24);
 
-        assertTrue(date.isSameDay(sameDay), "same");
-        assertFalse(date.isSameDay(notSameDay), "not same day");
-        assertFalse(date.isSameDay(notSameMonth), "not same month");
+        assertTrue(date.isSameDayAndMonth(sameDay), "same");
+        assertFalse(date.isSameDayAndMonth(notSameDay), "not same day");
+        assertFalse(date.isSameDayAndMonth(notSameMonth), "not same month");
     }
 
     @Test

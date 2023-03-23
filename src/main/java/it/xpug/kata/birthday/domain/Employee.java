@@ -3,8 +3,7 @@ package it.xpug.kata.birthday.domain;
 import java.time.LocalDate;
 
 /**
- * The employee representation This is a value object that holds the employee information It could
- * be refactored as a Record
+ * This record contains the employee PII with the birthday
  */
 public record Employee(String firstName, String lastName, BirthDate birthDate, String email) {
 
@@ -13,6 +12,6 @@ public record Employee(String firstName, String lastName, BirthDate birthDate, S
     }
 
     public boolean hasBirthday(LocalDate date) {
-        return birthDate.isSameDay(date);
+        return birthDate.isSameDayAndMonth(date);
     }
 }

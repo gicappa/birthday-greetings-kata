@@ -3,27 +3,43 @@ package it.xpug.kata.birthday.app;
 import it.xpug.kata.birthday.domain.BirthdayUseCase;
 import it.xpug.kata.birthday.infrastructure.CsvEmployeeRepository;
 import it.xpug.kata.birthday.infrastructure.JavaxEmailService;
-import java.io.IOException;
 import java.time.Clock;
 
-public class Main {
+/**
+ * The entry point of the application that triggers the birthday greetings logic.
+ * <p>
+ * This is where composition and creation of the objects is done and the computation starts.
+ * <p>
+ * Errors should be trapped here.
+ */
+public class Main implements Runnable {
 
     /**
-     * The entry point of the application that triggers the birthday greetings logic <br/> This is
-     * the class where the object should be instantiated and start to be brought to life. <br/> This
-     * is also where error should be reported.
+     * Main method entry point of the program
      *
-     * @param args application arguments
-     * @throws IOException        error while reading the file.
+     * @param args program arguments
      */
-    public static void main(String... args) throws IOException {
-
-        var birthdayGreetingsUseCase = new BirthdayUseCase(
-            new CsvEmployeeRepository("employee_data.txt"),
-            new JavaxEmailService("localhost", 25),
-            Clock.systemDefaultZone());
-
-        birthdayGreetingsUseCase.sendGreetings();
+    public static void main(String... args) {
+        new Main().run();
     }
 
+    /**
+     * Starting method
+     */
+    @Override
+    public void run() {
+        try {
+
+            var birthdayUseCase = new BirthdayUseCase(
+                new CsvEmployeeRepository("employee_data.txt"),
+                new JavaxEmailService("localhost", 25),
+                Clock.systemDefaultZone());
+
+            birthdayUseCase.sendGreetings();
+
+        } catch (Exception e) {
+            System.err.println("There was an error while sending the greetings");
+            e.printStackTrace();
+        }
+    }
 }

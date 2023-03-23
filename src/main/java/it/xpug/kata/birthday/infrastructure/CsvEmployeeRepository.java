@@ -9,6 +9,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The concrete implementation of the reader of
+ * the employees
+ */
 public class CsvEmployeeRepository implements EmployeeRepository {
 
     private final BufferedReader in;

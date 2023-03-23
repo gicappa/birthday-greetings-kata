@@ -2,7 +2,11 @@ package it.xpug.kata.birthday.domain;
 
 import javax.mail.MessagingException;
 
+/**
+ * The interface is abstracting the email service
+ * capable to send greetings Email
+ */
 public interface EmailService {
 
-    void sendEmailTo(EmailTemplate emailTemplate) throws MessagingException;
+    void sendEmailTo(GreetingEmail email) throws MessagingException;
 }

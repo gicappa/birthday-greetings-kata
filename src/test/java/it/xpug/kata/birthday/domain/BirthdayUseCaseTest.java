@@ -46,6 +46,6 @@ class BirthdayUseCaseTest {
     void it_sends_an_email_when_it_finds_a_birthday() throws MessagingException {
         birthdayUseCase.sendGreetings();
 
-        verify(emailService).sendEmailTo(EmailTemplate.fromEmployee(emma));
+        verify(emailService).sendEmailTo(GreetingEmail.fromEmployee(emma));
     }
 }

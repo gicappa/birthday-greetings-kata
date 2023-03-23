@@ -29,13 +29,10 @@ public class BirthdayUseCase {
      * @throws RuntimeException error while opening a file or parsing the csv
      */
     public void sendGreetings() {
-        repo.findAllEmployees().forEach(employee -> {
-            if (!employee.hasBirthday(today())) {
-                return;
-            }
-
-            emailService.sendEmailTo(Email.composeFrom(employee));
-        });
+        repo.findAllEmployees().stream()
+            .filter(employee -> employee.hasBirthday(today()))
+            .forEach(
+                employee -> emailService.sendEmailTo(Email.composeFrom(employee)));
     }
 
     /**

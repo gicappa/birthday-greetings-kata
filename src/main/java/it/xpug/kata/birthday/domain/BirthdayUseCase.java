@@ -2,7 +2,6 @@ package it.xpug.kata.birthday.domain;
 
 import java.time.Clock;
 import java.time.LocalDate;
-import javax.mail.MessagingException;
 
 public class BirthdayUseCase {
 
@@ -27,17 +26,13 @@ public class BirthdayUseCase {
      * @throws RuntimeException error while opening a file or parsing the csv
      */
     public void sendGreetings() {
-        try {
-            for (var employee : repo.findAllEmployees()) {
+        for (var employee : repo.findAllEmployees()) {
 
-                if (!employee.hasBirthday(today())) {
-                    continue;
-                }
-
-                emailService.sendEmailTo(Email.composeFrom(employee));
+            if (!employee.hasBirthday(today())) {
+                continue;
             }
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
+
+            emailService.sendEmailTo(Email.composeFrom(employee));
         }
     }
 

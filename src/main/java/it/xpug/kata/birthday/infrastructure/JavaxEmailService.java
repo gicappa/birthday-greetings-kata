@@ -1,7 +1,7 @@
 package it.xpug.kata.birthday.infrastructure;
 
-import it.xpug.kata.birthday.domain.EmailService;
 import it.xpug.kata.birthday.domain.Email;
+import it.xpug.kata.birthday.domain.EmailService;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -11,8 +11,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 /**
- * Concrete implementation of an email service capable
- * of sending greeting emails
+ * Concrete implementation of an email service capable of sending greeting emails
  */
 public class JavaxEmailService implements EmailService {
 
@@ -25,21 +24,26 @@ public class JavaxEmailService implements EmailService {
     }
 
     @Override
-    public void sendEmailTo(Email email) throws MessagingException {
-        MimeMessage msg = buildEmailMessage(email, createEmailSession());
+    public void sendEmailTo(Email email) {
 
-        Transport.send(msg);
+        try {
+            Transport.send(buildEmailMessage(email, createEmailSession()));
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    private static MimeMessage buildEmailMessage(Email email, Session session)
-        throws MessagingException {
-
-        var msg = new MimeMessage(session);
-        msg.setFrom(new InternetAddress(email.sender()));
-        msg.setRecipient(Message.RecipientType.TO, new InternetAddress(email.recipient()));
-        msg.setSubject(email.subject());
-        msg.setText(email.body());
-        return msg;
+    private MimeMessage buildEmailMessage(Email email, Session session) {
+        try {
+            var msg = new MimeMessage(session);
+            msg.setFrom(new InternetAddress(email.sender()));
+            msg.setRecipient(Message.RecipientType.TO, new InternetAddress(email.recipient()));
+            msg.setSubject(email.subject());
+            msg.setText(email.body());
+            return msg;
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private Session createEmailSession() {

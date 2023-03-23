@@ -1,7 +1,7 @@
 package it.xpug.kata.birthday.infrastructure;
 
 import it.xpug.kata.birthday.domain.Employee;
-import it.xpug.kata.birthday.domain.EmployeeRepository;
+import it.xpug.kata.birthday.domain.EmployeeRepo;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -13,11 +13,11 @@ import java.util.List;
  * The concrete implementation of the reader of
  * the employees
  */
-public class CsvEmployeeRepository implements EmployeeRepository {
+public class CsvEmployeeRepo implements EmployeeRepo {
 
     private final BufferedReader in;
 
-    public CsvEmployeeRepository(String fileName) throws FileNotFoundException {
+    public CsvEmployeeRepo(String fileName) throws FileNotFoundException {
         this.in = new BufferedReader(new FileReader(fileName));
     }
 

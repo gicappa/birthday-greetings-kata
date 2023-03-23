@@ -1,7 +1,7 @@
 package it.xpug.kata.birthday.app;
 
 import it.xpug.kata.birthday.domain.BirthdayUseCase;
-import it.xpug.kata.birthday.infrastructure.CsvEmployeeRepository;
+import it.xpug.kata.birthday.infrastructure.CsvEmployeeRepo;
 import it.xpug.kata.birthday.infrastructure.JavaxEmailService;
 import java.time.Clock;
 
@@ -31,7 +31,7 @@ public class Main implements Runnable {
         try {
 
             var birthdayUseCase = new BirthdayUseCase(
-                new CsvEmployeeRepository("employee_data.txt"),
+                new CsvEmployeeRepo("employee_data.txt"),
                 new JavaxEmailService("localhost", 25),
                 Clock.systemDefaultZone());
 

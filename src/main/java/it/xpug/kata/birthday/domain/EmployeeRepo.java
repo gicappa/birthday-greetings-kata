@@ -6,7 +6,7 @@ import java.util.List;
  * The interface that hides the possible implementation
  * on how to retrieve the employee list
  */
-public interface EmployeeRepository {
+public interface EmployeeRepo {
 
     /**
      * @return all the employees of a company

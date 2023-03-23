@@ -13,13 +13,13 @@ import org.junit.jupiter.api.Test;
 class BirthdayUseCaseTest {
 
     private BirthdayUseCase birthdayUseCase;
-    private EmployeeRepository repo;
+    private EmployeeRepo repo;
     private EmailService emailService;
     private Employee emma;
 
     @BeforeEach
     void beforeEach() {
-        repo = mock(EmployeeRepository.class);
+        repo = mock(EmployeeRepo.class);
         emailService = mock(EmailService.class);
 
         var jon = new Employee(

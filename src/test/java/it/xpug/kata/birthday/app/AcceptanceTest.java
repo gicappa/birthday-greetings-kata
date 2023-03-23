@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.dumbster.smtp.SimpleSmtpServer;
 import com.dumbster.smtp.SmtpMessage;
 import it.xpug.kata.birthday.domain.BirthdayUseCase;
-import it.xpug.kata.birthday.infrastructure.CsvEmployeeRepository;
+import it.xpug.kata.birthday.infrastructure.CsvEmployeeRepo;
 import it.xpug.kata.birthday.infrastructure.JavaxEmailService;
 import java.io.FileNotFoundException;
 import org.junit.jupiter.api.AfterEach;
@@ -37,7 +37,7 @@ public class AcceptanceTest {
         void before() throws FileNotFoundException {
             birthdayUseCase =
                 new BirthdayUseCase(
-                    new CsvEmployeeRepository("employee_data.txt"),
+                    new CsvEmployeeRepo("employee_data.txt"),
                     new JavaxEmailService("localhost", NONSTANDARD_PORT),
                     clockAt(2008, 10, 8));
 
@@ -78,7 +78,7 @@ public class AcceptanceTest {
         void before() throws FileNotFoundException {
             birthdayUseCase =
                 new BirthdayUseCase(
-                    new CsvEmployeeRepository("employee_data.txt"),
+                    new CsvEmployeeRepo("employee_data.txt"),
                     new JavaxEmailService("localhost", NONSTANDARD_PORT),
                     clockAt(2008, 1, 1));
 

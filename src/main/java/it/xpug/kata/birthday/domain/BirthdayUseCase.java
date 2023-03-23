@@ -31,8 +31,8 @@ public class BirthdayUseCase {
     public void sendGreetings() {
         repo.findAllEmployees().stream()
             .filter(employee -> employee.hasBirthday(today()))
-            .forEach(
-                employee -> emailService.sendEmailTo(Email.composeFrom(employee)));
+            .map(Email::composeFrom)
+            .forEach(emailService::sendEmailTo);
     }
 
     /**

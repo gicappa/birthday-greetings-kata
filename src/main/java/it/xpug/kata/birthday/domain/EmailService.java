@@ -8,5 +8,5 @@ import javax.mail.MessagingException;
  */
 public interface EmailService {
 
-    void sendEmailTo(GreetingEmail email) throws MessagingException;
+    void sendEmailTo(Email email) throws MessagingException;
 }

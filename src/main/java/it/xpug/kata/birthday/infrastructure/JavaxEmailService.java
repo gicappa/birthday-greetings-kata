@@ -1,7 +1,7 @@
 package it.xpug.kata.birthday.infrastructure;
 
 import it.xpug.kata.birthday.domain.EmailService;
-import it.xpug.kata.birthday.domain.GreetingEmail;
+import it.xpug.kata.birthday.domain.Email;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -25,13 +25,13 @@ public class JavaxEmailService implements EmailService {
     }
 
     @Override
-    public void sendEmailTo(GreetingEmail email) throws MessagingException {
+    public void sendEmailTo(Email email) throws MessagingException {
         MimeMessage msg = buildEmailMessage(email, createEmailSession());
 
         Transport.send(msg);
     }
 
-    private static MimeMessage buildEmailMessage(GreetingEmail email, Session session)
+    private static MimeMessage buildEmailMessage(Email email, Session session)
         throws MessagingException {
 
         var msg = new MimeMessage(session);

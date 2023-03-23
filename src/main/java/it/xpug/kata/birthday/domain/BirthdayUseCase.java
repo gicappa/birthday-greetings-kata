@@ -34,7 +34,7 @@ public class BirthdayUseCase {
                     continue;
                 }
 
-                emailService.sendEmailTo(GreetingEmail.fromEmployee(employee));
+                emailService.sendEmailTo(Email.composeFrom(employee));
             }
         } catch (MessagingException e) {
             throw new RuntimeException(e);
